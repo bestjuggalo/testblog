@@ -1,0 +1,42 @@
+---
+const EMAIL = "bestjuggalo@protonmail.com";
+const { title } = Astro.props;
+const subject = encodeURIComponent(`Re: ${title}`);
+const mailto = `mailto:${EMAIL}?subject=${subject}`;
+---
+
+<div class="reply-section">
+	<hr class="reply-divider" />
+	<p class="reply-prompt">
+		Have a thought? <a href={mailto} class="reply-link">Reply by email →</a>
+	</p>
+</div>
+
+<style>
+	.reply-section {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: 2em auto 0;
+		padding: 0 1em;
+	}
+	.reply-divider {
+		border: none;
+		border-top: 1px solid var(--border-color);
+		margin: 0 0 1.75em 0;
+	}
+	.reply-prompt {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+	.reply-link {
+		color: var(--accent);
+		border-bottom: 1px solid rgba(123, 36, 56, 0.3);
+		text-decoration: none;
+		transition: border-color 0.15s ease;
+	}
+	.reply-link:hover {
+		border-bottom-color: var(--accent);
+	}
+</style>

@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE, BLOG_HEADING, BLOG_SUBTITLE } from '../../consts';
+
+const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Writing — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="page-header">
+				<h1>{BLOG_HEADING}</h1>
+				<p class="page-subtitle">{BLOG_SUBTITLE}</p>
+			</header>
+
+			<ol class="posts-list">
+				{
+					posts.map((post) => (
+						<li class="post-row">
+							<a href={`/blog/${post.id}/`}>
+								<div class="post-meta">
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</div>
+								<h2 class="post-title">{post.data.title}</h2>
+								{post.data.description && (
+									<p class="post-excerpt">{post.data.description}</p>
+								)}
+							</a>
+						</li>
+					))
+				}
+			</ol>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: calc(100% - 2em);
+		max-width: 680px;
+		padding-top: 4em;
+	}
+
+	.page-header {
+		margin-bottom: 3.5em;
+	}
+	.page-header h1 {
+		font-size: 2.5em;
+		font-weight: 700;
+		letter-spacing: -0.035em;
+		margin-bottom: 0.3em;
+	}
+	.page-subtitle {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+		font-size: 0.95em;
+		color: rgb(var(--gray));
+		margin: 0;
+	}
+
+	.posts-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.post-row {
+		border-top: 1px solid var(--border-color);
+	}
+	.post-row:last-child {
+		border-bottom: 1px solid var(--border-color);
+	}
+	.post-row a {
+		display: block;
+		padding: 1.75em 0;
+		text-decoration: none;
+		border-bottom: none;
+		color: inherit;
+	}
+	.post-row a:hover .post-title {
+		color: var(--accent);
+	}
+
+	.post-meta {
+		margin-bottom: 0.4em;
+	}
+	.post-date {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+		font-size: 0.8em;
+		color: rgb(var(--gray));
+		letter-spacing: 0.01em;
+	}
+	.post-title {
+		font-size: 1.2em;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		color: rgb(var(--black));
+		margin: 0 0 0.4em 0;
+		transition: color 0.15s ease;
+	}
+	.post-excerpt {
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	@media (max-width: 720px) {
+		.page-header h1 {
+			font-size: 1.875em;
+		}
+	}
+</style>

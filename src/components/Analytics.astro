@@ -1,0 +1,33 @@
+---
+// Analytics Component
+// Supports both Cloudflare Web Analytics and Plausible
+// Uncomment the one you want to use and configure
+
+// For Cloudflare Analytics:
+// 1. Enable Web Analytics in your Cloudflare dashboard
+// 2. Copy your beacon token and paste below
+const CF_BEACON_TOKEN = ""; // e.g., "abc123def456"
+
+// For Plausible Analytics:
+// 1. Sign up at https://plausible.io
+// 2. Add your domain and paste below
+const PLAUSIBLE_DOMAIN = ""; // e.g., "yourdomain.com"
+---
+
+<!-- Cloudflare Web Analytics -->
+{CF_BEACON_TOKEN && (
+	<script
+		defer
+		src='https://static.cloudflareinsights.com/beacon.min.js'
+		data-cf-beacon={`{"token": "${CF_BEACON_TOKEN}"}`}
+	></script>
+)}
+
+<!-- Plausible Analytics -->
+{PLAUSIBLE_DOMAIN && (
+	<script
+		defer
+		data-domain={PLAUSIBLE_DOMAIN}
+		src="https://plausible.io/js/script.js"
+	></script>
+)}

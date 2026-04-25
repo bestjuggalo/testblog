@@ -1,0 +1,157 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Comments from '../components/Comments.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, subtitle, description, pubDate, updatedDate, heroImage, heroImageCredit, heroImageCreditUrl, tags } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 8px;
+				box-shadow: var(--box-shadow);
+			}
+			.hero-credit {
+				text-align: center;
+				margin-top: 0.6em;
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				font-size: 0.75em;
+				color: rgb(var(--gray));
+			}
+			.hero-credit a {
+				color: rgb(var(--gray));
+				border-bottom: 1px solid rgba(110, 110, 108, 0.3);
+				transition: color 0.15s ease, border-color 0.15s ease;
+			}
+			.hero-credit a:hover {
+				color: var(--accent);
+				border-bottom-color: var(--accent);
+			}
+			.prose {
+				width: 680px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 3em 1em 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.post-header {
+				margin-bottom: 2.5em;
+				padding-bottom: 2em;
+				border-bottom: 1px solid var(--border-color);
+			}
+			.post-meta {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				font-size: 0.8em;
+				color: rgb(var(--gray));
+				letter-spacing: 0.01em;
+				margin-bottom: 0.9em;
+			}
+			.last-updated-on {
+				font-style: italic;
+				margin-top: 0.25em;
+			}
+			.post-header h1 {
+				font-size: 2.25em;
+				font-weight: 700;
+				letter-spacing: -0.03em;
+				line-height: 1.1;
+				margin: 0 0 0.4em 0;
+				color: rgb(var(--black));
+			}
+			.post-subtitle {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				font-size: 1.1em;
+				font-weight: 400;
+				color: rgb(var(--gray));
+				line-height: 1.5;
+				margin: 0 0 1.25em 0;
+			}
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+				margin-top: 1.25em;
+			}
+			.tag {
+				padding: 0.25em 0.7em;
+				background-color: rgb(var(--gray-light));
+				color: rgb(var(--gray));
+				border-radius: 3px;
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				font-size: 0.75em;
+				letter-spacing: 0.02em;
+				border: 1px solid var(--border-color);
+				text-decoration: none;
+				transition: all 0.15s ease;
+			}
+			.tag:hover {
+				background-color: rgba(123, 36, 56, 0.06);
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt={heroImageCredit ?? ''} />}
+					{heroImageCredit && (
+						<p class="hero-credit">
+							{heroImageCreditUrl
+								? <a href={heroImageCreditUrl} target="_blank" rel="noopener noreferrer">{heroImageCredit}</a>
+								: heroImageCredit
+							}
+						</p>
+					)}
+				</div>
+				<div class="prose">
+					<div class="post-header">
+						<div class="post-meta">
+							<FormattedDate date={pubDate} />
+							{updatedDate && (
+								<div class="last-updated-on">
+									Last updated on <FormattedDate date={updatedDate} />
+								</div>
+							)}
+						</div>
+						<h1>{title}</h1>
+						{subtitle && <p class="post-subtitle">{subtitle}</p>}
+						{tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+						)}
+					</div>
+					<slot />
+				</div>
+			</article>
+			<Comments title={title} />
+		</main>
+		<Footer />
+	</body>
+</html>
