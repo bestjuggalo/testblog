@@ -6,7 +6,7 @@ pubDate: 'April 25 2026'
 heroImage: '../../assets/a2725a10034662605d97ec22d76260aa.avif'
 heroImageCredit: "Pictured: $1.18 million Australian dollars"
 tags: ['economics', 'society', 'politics']
-draft: true
+draft: false
 ---
 
 The cost of the average Australian home is, by any historical measure, deranged. Nine or ten times the average worker's annual income. Forty percent or more of household income required to service the loan. A thirty-year repayment term that, for an increasing share of buyers, will not be paid off before retirement. This is not a normal way to acquire shelter, and it is not how housing has worked for most of human history. It is barely how it worked for our grandparents. It is a seventy-year-old experiment, conducted on Australia among other countries, and our nation is now paying a price for it that we can no longer afford.
