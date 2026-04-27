@@ -6,6 +6,7 @@ pubDate: 'April 25 2026'
 heroImage: '../../assets/a2725a10034662605d97ec22d76260aa.avif'
 heroImageCredit: "Pictured: $1.18 million Australian dollars"
 tags: ['economics', 'society', 'politics']
+readingTime: '35 minute read'
 draft: false
 ---
 
